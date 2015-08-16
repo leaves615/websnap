@@ -18,6 +18,7 @@
     <div class="col-xs-12 col-sm-9">
         <div class="clearfix">
             <select id="${name}"  name="${name}" value="${value}" class="${className}" ${extendAttribute}>
+                <option>请选择</option>
                 <c:forEach items="${map}" var="entry">
                     <c:choose>
                         <c:when test="${entry.key == value}">

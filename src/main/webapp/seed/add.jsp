@@ -1,3 +1,5 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -39,7 +41,8 @@
                         <a href="${ctx}/">Home</a>
                     </li>
                     <li>爬虫管理</li>
-                    <li class="active">网站管理</li>
+                    <li>网站管理</li>
+                    <li class="active">添加网站</li>
                 </ul><!-- /.breadcrumb -->
             </div><!-- 主内容顶部导航结束 -->
 
@@ -47,12 +50,19 @@
  <div class="page-content">
       <div class="row">
           <div class="col-xs-12">
-              <form class="form-horizontal" action="/seed/${seed.id}/update" method="post" id="form">
+              <form class="form-horizontal" action="/seed/add" method="post" id="form">
                   <h3 class="lighter block green">添加网站</h3>
                   <form:input label="网站名称：" name="name" value="${seed.name}"/>
                   <form:input label="URL：" name="url" extendAttribute="placeholder='http://'" value="${seed.url}"/>
                   <form:input label="计划：" name="cron" value="${seed.cron}"/>
                   <form:input label="并发数：" name="numberOfCrawler" inputType="number" className="col-sm-3" value="${seed.numberOfCrawler}"/>
+                  <%
+                      Map<String, String> statusMap = new HashMap<String, String>();
+                      statusMap.put("0", "禁用");
+                      statusMap.put("1", "启用");
+                      request.setAttribute("statusMap", statusMap);
+                  %>
+                  <form:select label="状态：" name="status" map="${statusMap}" value="${seed.status}"/>
                   <div class="form-group">
                       <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                       <div class="col-xs-12 col-sm-9">

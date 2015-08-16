@@ -110,6 +110,7 @@
                                                     <a href="/seed/${item.id}/enable" class="btn btn-white btn-mini">启用</a>
                                                 </c:otherwise>
                                             </c:choose>
+                                            <a href="/seed/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
