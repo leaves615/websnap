@@ -58,6 +58,10 @@ public class SeedSqlProvider {
     public String updateByPrimaryKeySelective(Seed record) {
         BEGIN();
         UPDATE("seed");
+
+        if (record.getName() !=null) {
+            SET("name = #{name, jdbcType=VARCHAR}");
+        }
         
         if (record.getUrl() != null) {
             SET("url = #{url,jdbcType=VARCHAR}");

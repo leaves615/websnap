@@ -60,18 +60,21 @@ public class SeedController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @Transactional
     public String add(Seed seed,RedirectAttributes redirectAttributes) {
+        seedMapper.insert(seed);
         return "redirect:/seed/list";
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    public String updatePage(Long id, ModelMap map) {
+    public String updatePage(@PathVariable Long id, ModelMap map) {
         Seed seed = (Seed) map.getOrDefault("seed", seedMapper.selectByPrimaryKey(id));
         map.put("seed", seed);
         return "/seed/edit";
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+    @Transactional
     public String update(Seed seed, RedirectAttributes redirectAttributes) {
         seedMapper.updateByPrimaryKeySelective(seed);
         return "redirect:/seed/list";

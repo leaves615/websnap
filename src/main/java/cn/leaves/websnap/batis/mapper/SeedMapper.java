@@ -29,10 +29,10 @@ public interface SeedMapper {
     @Insert({
         "insert into seed (id, url, ",
         "lastExecuteTime, cron, ",
-        "status)",
+        "status, name, numberOfCrawler, charset)",
         "values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, ",
         "#{lastexecutetime,jdbcType=TIMESTAMP}, #{cron,jdbcType=BIGINT}, ",
-        "#{status,jdbcType=BIT})"
+        "#{status,jdbcType=BIT},#{name, jdbcType=VARCHAR},#{numberOfCrawler}, #{charset})"
     })
     int insert(Seed record);
 
@@ -92,6 +92,7 @@ public interface SeedMapper {
           "status = #{status,jdbcType=BIT}",
           "numberOfCrawler = #{numberOfCrawler,jdbcType=BIT}",
           "charset = #{charset,jdbcType=BIT}",
+          "name = #{name}",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Seed record);
