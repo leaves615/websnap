@@ -47,12 +47,13 @@
  <div class="page-content">
       <div class="row">
           <div class="col-xs-12">
-              <form class="form-horizontal" action="/seed/${seed.id}/update" method="post" id="form">
+              <form class="form-horizontal" action="/seed/add" method="post" id="form">
                   <h3 class="lighter block green">添加网站</h3>
-                  <form:input label="网站名称：" name="name" value="${seed.name}"/>
-                  <form:input label="URL：" name="url" extendAttribute="placeholder='http://'" value="${seed.url}"/>
-                  <form:input label="计划：" name="cron" value="${seed.cron}"/>
-                  <form:input label="并发数：" name="numberOfCrawler" inputType="number" className="col-sm-3" value="${seed.numberOfCrawler}"/>
+                  <input type="hidden" name="id" value="${seed.id}">
+                  <form:input label="网站名称：" name="name"/>
+                  <form:input label="URL：" name="url" extendAttribute="placeholder='http://'"/>
+                  <form:input label="计划：" name="cron"/>
+                  <form:input label="并发数：" name="numberOfCrawler" inputType="number" className="col-sm-3"/>
                   <div class="form-group">
                       <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                       <div class="col-xs-12 col-sm-9">
