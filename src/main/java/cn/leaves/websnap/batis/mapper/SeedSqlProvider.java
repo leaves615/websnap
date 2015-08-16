@@ -1,14 +1,8 @@
 package cn.leaves.websnap.batis.mapper;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
-import static org.apache.ibatis.jdbc.SqlBuilder.SET;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
-import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
-
 import cn.leaves.websnap.batis.entity.Seed;
+
+import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class SeedSqlProvider {
 
@@ -89,6 +83,14 @@ public class SeedSqlProvider {
 
         WHERE("id = #{id,jdbcType=BIGINT}");
         
+        return SQL();
+    }
+
+    public String findBySelective(Seed record) {
+        BEGIN();
+        SELECT("*");
+        FROM("seed");
+        ORDER_BY("lastExecuteTime desc");
         return SQL();
     }
 }

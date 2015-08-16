@@ -1,14 +1,8 @@
 package cn.leaves.websnap.batis.mapper;
 
+import cn.leaves.websnap.batis.entity.Page;
 import cn.leaves.websnap.batis.entity.Seed;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
@@ -108,4 +102,7 @@ public interface SeedMapper {
     })
     @Result(javaType = Seed.class)
     List<Seed> selectAll();
+
+    @SelectProvider(type = SeedSqlProvider.class, method = "findBySelective")
+    com.github.pagehelper.Page<Seed> findBySelective(Seed record);
 }

@@ -1,6 +1,7 @@
 package cn.leaves.websnap.batis.mapper;
 
 import cn.leaves.websnap.batis.entity.Page;
+import cn.leaves.websnap.batis.entity.Seed;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -114,4 +115,6 @@ public interface PageMapper {
             "where weburl = #{url}"
     })
     int countUrl(String url);
+
+    com.github.pagehelper.Page<Seed> findBySelective(Page record);
 }
