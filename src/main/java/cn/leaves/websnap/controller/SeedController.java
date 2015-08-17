@@ -80,7 +80,7 @@ public class SeedController {
         return "redirect:/seed/list";
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/delete")
     @Transactional
     public String delete(@PathVariable Long id) {
         seedMapper.deleteByPrimaryKey(id);
