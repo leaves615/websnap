@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ public class SeedPageRuleController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @Transactional
     public String add(@PathVariable Long seedid, Seedpagerule rule, RedirectAttributes redirectAttributes) {
         pageruleMapper.insert(rule);
         return String.format("redirect:/seed/%s/pageRule/list", seedid);
@@ -53,13 +55,15 @@ public class SeedPageRuleController {
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+    @Transactional
     public String update(@PathVariable Long seedid, Seedpagerule rule, RedirectAttributes redirectAttributes) {
         pageruleMapper.updateByPrimaryKey(rule);
         return String.format("redirect:/seed/%s/pageRule/list", seedid);
     }
 
     @RequestMapping("/{id}/delete")
-    public String delete(@PathVariable Long seedid, Long id) {
+    @Transactional
+    public String delete(@PathVariable Long seedid,@PathVariable Long id) {
         pageruleMapper.deleteByPrimaryKey(id);
         return String.format("redirect:/seed/%s/pageRule/list", seedid);
     }
