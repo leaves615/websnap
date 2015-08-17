@@ -111,6 +111,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <a href="/seed/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
+                                            <a href="/seed/${item.id}/delete" class="btn btn-white btn-mini">删除</a>
                                             <a href="/seed/${item.id}/pageRule/list" class="btn btn-white btn-mini">页面规则</a>
                                         </td>
                                     </tr>

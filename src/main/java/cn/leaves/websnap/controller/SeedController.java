@@ -79,4 +79,11 @@ public class SeedController {
         seedMapper.updateByPrimaryKeySelective(seed);
         return "redirect:/seed/list";
     }
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    @Transactional
+    public String delete(@PathVariable Long id) {
+        seedMapper.deleteByPrimaryKey(id);
+        return "redirect:/seed/list";
+    }
 }
