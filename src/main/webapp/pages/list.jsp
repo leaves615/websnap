@@ -37,8 +37,8 @@
                         <i class="ace-icon fa fa-home home-icon"></i>
                         <a href="${ctx}/">Home</a>
                     </li>
-                    <li>爬虫管理</li>
-                    <li class="active">网站管理</li>
+                    <li>抓取内容管理</li>
+                    <li class="active">抓取记录</li>
                 </ul><!-- /.breadcrumb -->
                 <div class="pull-right">
                     <div class="btn-group">
@@ -49,7 +49,41 @@
 
 
  <div class="page-content">
-
+      <div class="row">
+          <div class="col-xs-12">
+              <form method="get" class="form-inline" role="form" enctype="application/x-www-form-urlencoded">
+                  <div class="form-group">
+                      <label>网站:</label>
+                      <select id="seedid" name="seedid" class="form-control input-sm">
+                          <option value="">--请选择--</option>
+                          <c:forEach items="${seeds}" var="item">
+                              <c:choose>
+                                  <c:when test="${item.id == record.seedid}">
+                                      <option value="${item.id}" selected>${item.name}</option>
+                                  </c:when>
+                                  <c:otherwise>
+                                      <option value="${item.id}">${item.name}</option>
+                                  </c:otherwise>
+                              </c:choose>
+                          </c:forEach>
+                        </select>
+                  </div>
+                  <div class="form-group">
+                            <label>标题:</label>
+                        <input type="text" id="title" name="title" value="${record.title}" class="form-control input-sm">
+                  </div>
+                  <div class="form-group">
+                        <label>发送内容:</label>
+                        <input type="text" id="fetchtime" name="fetchtimeString" value="${record.fetchtimeString}" class="form-control input-sm">
+                  </div>
+                  <div class="form-group">
+                        <button type="submit" class="btn btn-sm">查询</button>
+                        <button type="reset" class="btn btn-sm">重置</button>
+                  </div>
+            </form>
+          </div>
+	  </div>
+	  
 	<div class="hr hr-16 hr-dotted"></div>
                 <div class="row">
                     <div class="col-xs-12">  
@@ -57,10 +91,9 @@
                             <thead>
                             <tr>
                                 <td>编号</td>
-                                <td>名称</td>
+                                <td>标题</td>
                                 <td>url</td>
-                                <td>上次执行时间</td>
-                                <td>状态</td>
+                                <td>抓取时间</td>
                                 <td width="200">操作</td>
                             </tr>
                             </thead>
@@ -69,21 +102,10 @@
                                 <c:forEach items="${page.list}" var="item">
                                     <tr>
                                         <td>${item.id}</td>
-                                        <td>${item.name}</td>
-                                        <td>${item.url}</td>
-                                        <td><fmt:formatDate value="${item.lastexecutetime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                        <td>${item.status?'启用':'禁用'}</td>
+                                        <td>${item.title}</td>
+                                        <td>${item.weburl}</td>
+                                        <td><fmt:formatDate value="${item.fetchtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${item.status}">
-                                                    <a href="/seed/${item.id}/disable" class="btn btn-white btn-mini">禁用</a>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a href="/seed/${item.id}/enable" class="btn btn-white btn-mini">启用</a>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <a href="/seed/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
-                                            <a href="/seed/${item.id}/delete" class="btn btn-white btn-mini">删除</a>
                                             <a href="/seed/${item.id}/pageRule/list" class="btn btn-white btn-mini">页面规则</a>
                                         </td>
                                     </tr>
@@ -95,7 +117,7 @@
                     <div class="col-xs-12 text-right">
                         <c:if test="${page!=null}">
                             <w:pager pageSize="${page.pageSize}" pageNo="${page.pageNum}"
-                                    url="smsRecordList.do" recordCount="${page.total}" />
+                                    url="${ctx}/pages/list" recordCount="${page.total}" />
                         </c:if>
                     </div>
 	            </div>

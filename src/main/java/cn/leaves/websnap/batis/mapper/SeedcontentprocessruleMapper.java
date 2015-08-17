@@ -130,4 +130,22 @@ public interface SeedcontentprocessruleMapper {
     })
     Page<Seedcontentprocessrule> selectByRuleId(Long ruleId);
 
+    @Select({
+            "select scpr.*",
+            "from seedContentProcessRule scpr",
+            "where scpr.pageId = #{pageId,jdbcType=BIGINT}"
+    })
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
+            @Result(column="pageId", property="pageid", jdbcType=JdbcType.BIGINT),
+            @Result(column="collectVar", property="collectvar", jdbcType=JdbcType.VARCHAR),
+            @Result(column="collectType", property="collecttype", jdbcType=JdbcType.VARCHAR),
+            @Result(column="collectLabel", property="collectlabel", jdbcType=JdbcType.VARCHAR),
+            @Result(column="collectPattern", property="collectpattern", jdbcType=JdbcType.VARCHAR),
+            @Result(column="storage", property="storage", jdbcType=JdbcType.BIT),
+            @Result(column="conditional", property="conditional", jdbcType=JdbcType.BIT),
+            @Result(column="conditionPattern", property="conditionpattern", jdbcType=JdbcType.VARCHAR)
+    })
+    List<Seedcontentprocessrule> selectByRuleIdWithList(Long ruleId);
+
 }

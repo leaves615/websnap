@@ -1,14 +1,9 @@
 package cn.leaves.websnap.batis.mapper;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
-import static org.apache.ibatis.jdbc.SqlBuilder.SET;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
-import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
-
 import cn.leaves.websnap.batis.entity.Page;
+import org.springframework.util.StringUtils;
+
+import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class PageSqlProvider {
 
@@ -87,6 +82,32 @@ public class PageSqlProvider {
         
         WHERE("id = #{id,jdbcType=BIGINT}");
         
+        return SQL();
+    }
+
+    public String findBySelective(Page record) {
+        BEGIN();
+        SELECT("*");
+        FROM("page");
+        if (record.getSeedid() != null&&record.getSeedid() >0) {
+            WHERE("seedid=#{seedid}");
+        }
+
+        if (StringUtils.hasText(record.getWeburl())) {
+            WHERE("weburl = #{weburl,jdbcType=VARCHAR}");
+        }
+        if (StringUtils.hasText(record.getTitle())) {
+            WHERE("title like #{title,jdbcType=VARCHAR}");
+        }
+
+        if (record.getFetchtime() != null) {
+            SET("fetchTime > #{fetchtime,jdbcType=TIMESTAMP}");
+        }
+
+        if (record.getHascontent() != null) {
+            WHERE("hasContent = #{hascontent,jdbcType=BIT}");
+        }
+        ORDER_BY("fetchTime desc");
         return SQL();
     }
 }

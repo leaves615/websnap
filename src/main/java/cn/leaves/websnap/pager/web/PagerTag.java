@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 
 /**
@@ -29,7 +31,7 @@ public class PagerTag extends TagSupport  {
         	//页号越界处理  
             if(pageNo > pageCount){      pageNo = pageCount; }  
             if(pageNo < 1){      pageNo = 1; } 
-            sb.append("<form method=\"post\" action=\"").append(this.url)  
+            sb.append("<form method=\"get\" enctype=\"application/x-www-form-urlencoded\"  action=\"").append(this.url)
             .append("\" name=\"qPagerForm\">\r\n");
             
             //获取请求中的所有参数  
@@ -41,7 +43,7 @@ public class PagerTag extends TagSupport  {
             //把请求中的所有参数当作隐藏表单域
             while (enumeration.hasMoreElements()) {  
                 name =  enumeration.nextElement();  
-                value = request.getParameter(name);  
+                value = request.getParameter(name);
                 // 去除页号  
                 if (name.equals("pageNo")) {  
                     if (null != value && !"".equals(value)) {
@@ -49,11 +51,11 @@ public class PagerTag extends TagSupport  {
                     }
                     continue;  
                 }
-                sb.append("<input type=\"hidden\" name=\"")  
-                  .append(name)  
-                  .append("\" value=\"")  
-                  .append(value)  
-                  .append("\"/>\r\n");  
+                sb.append("<input type=\"hidden\" name=\"")
+                        .append(name)
+                        .append("\" value=\"")
+                        .append(value)
+                        .append("\"/>\r\n");
             }
             
             //把当前页号设置成请求参数  
@@ -80,33 +82,20 @@ public class PagerTag extends TagSupport  {
             long start = 1;
 
             //显示当前页附近的页  
-            long end = this.pageNo + 1;
-            if(end > pageCount){  
-                end = pageCount;  
+            long end = 9;
+            if (pageNo > 5) {
+                start = pageNo - 4;
+                end = pageNo + 4;
             }
-			//始终显示1, 2页和最后两页"..."  
-			if (pageCount>5 && (this.pageNo - 3 > start || this.pageNo > pageCount - 3)) {
-				
-				//如果前面页数过多,显示"..."  
-				if(end > start) {
-					sb.append("<li>\n" +
-	                        "<a href=\"javascript:turnOverPage("+(start)+")\">"+(start)+"</a>\n" +
-	                        "</li>");
-				}
-				if(end > start + 1) {
-					sb.append("<li>\n" +
-	                        "<a href=\"javascript:turnOverPage("+(start+1)+")\">"+(start+1)+"</a>\n" +
-	                        "</li>");
-				}
-				if(end > start + 2) {
-					sb.append("<li class=\"disabled\">\n" +
-							"<a href=\"#\">&hellip;</a>\n" +
-							"</li>");
-				}
-				
-				start = end - 3 > 0 ? end -3 : 1;
-			}
-            for(long i = start; i <= end+1; i++){
+
+            end = pageCount>9?end : pageCount;
+
+            if (end >9 && end > pageCount) {
+                end = pageCount;
+                start = end -9;
+            }
+
+            for(long i = start; i <= end; i++){
             	if(i>pageCount)break;
                 if(pageNo == i){   //当前页号不需要超链接  
                     sb.append("<li class=\"active\">\n" +
@@ -118,23 +107,7 @@ public class PagerTag extends TagSupport  {
                               "</li>");
                 }
             }
-            //如果后面页数过多,显示"..."  
-            if(end < pageCount - 2) {
-                sb.append("<li class=\"disabled\">\n" +
-                          "<a href=\"#\">&hellip;</a>\n" +
-                          "</li>");
-            }
-            if(end < pageCount - 1){
-                sb.append("<li>\n" +
-                          "<a href=\"javascript:turnOverPage("+(pageCount-1)+")\">"+(pageCount-1)+"</a>\n" +
-                          "</li>");
 
-            }
-            if(end < pageCount){
-                sb.append("<li>\n" +
-                          "<a href=\"javascript:turnOverPage("+pageCount+")\">"+pageCount+"</a>\n" +
-                          "</li>");
-            }
             
           //下一页处理  
             sb.append("<li class=\"next ")
