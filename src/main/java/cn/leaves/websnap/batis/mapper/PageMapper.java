@@ -26,6 +26,7 @@ public interface PageMapper {
      */
     @Insert({
         "insert into page (id, seedId, ",
+        "title,",
         "weburl, fetchTime, ",
         "hasContent, content)",
         "values (#{id,jdbcType=BIGINT}, #{seedid,jdbcType=BIGINT}, ",
@@ -60,6 +61,7 @@ public interface PageMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="seedId", property="seedid", jdbcType=JdbcType.BIGINT),
+        @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
         @Result(column="weburl", property="weburl", jdbcType=JdbcType.VARCHAR),
         @Result(column="fetchTime", property="fetchtime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="hasContent", property="hascontent", jdbcType=JdbcType.BIT),
@@ -85,6 +87,7 @@ public interface PageMapper {
     @Update({
         "update page",
         "set seedId = #{seedid,jdbcType=BIGINT},",
+          "title = #{title,jdbcType=VARCHAR},",
           "weburl = #{weburl,jdbcType=VARCHAR},",
           "fetchTime = #{fetchtime,jdbcType=TIMESTAMP},",
           "hasContent = #{hascontent,jdbcType=BIT},",
@@ -102,6 +105,7 @@ public interface PageMapper {
     @Update({
         "update page",
         "set seedId = #{seedid,jdbcType=BIGINT},",
+          "title = #{title,jdbcType=VARCHAR},",
           "weburl = #{weburl,jdbcType=VARCHAR},",
           "fetchTime = #{fetchtime,jdbcType=TIMESTAMP},",
           "hasContent = #{hascontent,jdbcType=BIT}",

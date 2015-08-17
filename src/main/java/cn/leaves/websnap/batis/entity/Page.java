@@ -3,8 +3,9 @@ package cn.leaves.websnap.batis.entity;
 import java.util.Date;
 
 public class Page {
-    public Page(Long seedid, String weburl, Date fetchtime, Boolean hascontent) {
+    public Page(Long seedid, String title, String weburl, Date fetchtime, Boolean hascontent) {
         this.seedid = seedid;
+        this.title = title;
         this.weburl = weburl;
         this.fetchtime = fetchtime;
         this.hascontent = hascontent;
@@ -32,6 +33,9 @@ public class Page {
      *
      * @mbggenerated
      */
+
+    private String title;
+
     private String weburl;
 
     /**
@@ -200,5 +204,13 @@ public class Page {
      */
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

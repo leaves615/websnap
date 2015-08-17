@@ -14,19 +14,14 @@ import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.context.annotation.Scope;
-import org.springframework.expression.EvaluationException;
-import org.springframework.expression.ParseException;
-import org.springframework.expression.spel.standard.SpelExpression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.StringUtils;
-import org.springframework.web.util.WebUtils;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
@@ -101,15 +96,18 @@ public class GeneralCrawler extends WebCrawler {
             if (checkVisited(page.getWebURL().getURL())) {
                 return;
             }
-            cn.leaves.websnap.batis.entity.Page dbPage = new cn.leaves.websnap.batis.entity.Page(
-                    seedId, page.getWebURL().getURL(), new Date(), false);
-            pageMapper.insert(dbPage);
+
             String charset = page.getContentCharset();
             if (StringUtils.isEmpty(charset)) {
                 charset = seed.getCharset();
             }
             String html = new String(page.getContentData(), charset);
             Document document = Jsoup.parse(html);
+
+            String title = document.select("html head title").text();
+            cn.leaves.websnap.batis.entity.Page dbPage = new cn.leaves.websnap.batis.entity.Page(
+                    seedId, title, page.getWebURL().getURL(), new Date(), false);
+            pageMapper.insert(dbPage);
 
             List<Seedcontentprocessrule> rules = getContentRules(getPath(page.getWebURL().getURL()));
             Map<Seedcontentprocessrule, String> collectedMap = new HashMap<>();

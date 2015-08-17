@@ -30,10 +30,13 @@ public class PageSqlProvider {
             VALUES("seedId", "#{seedid,jdbcType=BIGINT}");
         }
         
+        if (record.getTitle() != null) {
+            VALUES("title", "#{title,jdbcType=VARCHAR}");
+        }
         if (record.getWeburl() != null) {
             VALUES("weburl", "#{weburl,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getFetchtime() != null) {
             VALUES("fetchTime", "#{fetchtime,jdbcType=TIMESTAMP}");
         }
@@ -66,7 +69,10 @@ public class PageSqlProvider {
         if (record.getWeburl() != null) {
             SET("weburl = #{weburl,jdbcType=VARCHAR}");
         }
-        
+        if (record.getTitle() != null) {
+            SET("title = #{title,jdbcType=VARCHAR}");
+        }
+
         if (record.getFetchtime() != null) {
             SET("fetchTime = #{fetchtime,jdbcType=TIMESTAMP}");
         }
