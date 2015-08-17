@@ -1,5 +1,5 @@
-<%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -42,7 +42,7 @@
                     </li>
                     <li>爬虫管理</li>
                     <li>网站管理</li>
-                    <li class="active">添加网站</li>
+                    <li class="active">修改页面匹配条件</li>
                 </ul><!-- /.breadcrumb -->
             </div><!-- 主内容顶部导航结束 -->
 
@@ -50,20 +50,18 @@
  <div class="page-content">
       <div class="row">
           <div class="col-xs-12">
-              <form class="form-horizontal" action="/seed/add" method="post" id="form">
-                  <h3 class="lighter block green">添加网站</h3>
-                  <form:input label="网站名称：" name="name" value="${seed.name}"/>
-                  <form:input label="URL：" name="url" extendAttribute="placeholder='http://'" value="${seed.url}"/>
-                  <form:input label="计划：" name="cron" value="${seed.cron}"/>
-                  <form:input label="并发数：" name="numberOfCrawler" inputType="number" className="col-sm-3" value="${seed.numberOfCrawler}"/>
-                  <form:input label="字符编码" name="charset" value="${seed.charset}"/>
+              <form class="form-horizontal" action="/seed/${seedid}/pageRule/${rule.id}/update" method="post" id="form">
+                  <h3 class="lighter block green">修改页面匹配条件</h3>
+                  <input type="hidden" name="seedid" value="${seedid}"/>
+                  <input type="hidden" name="id" value="${rule.id}"/>
                   <%
-                      Map<String, String> statusMap = new HashMap<String, String>();
-                      statusMap.put("false", "禁用");
-                      statusMap.put("true", "启用");
-                      request.setAttribute("statusMap", statusMap);
+                      Map<String, String> matchTypeMap = new HashMap<String, String>();
+                      matchTypeMap.put("regex", "正则表达式");
+                      matchTypeMap.put("antStyle", "通配符");
+                      request.setAttribute("matchTypeMap", matchTypeMap);
                   %>
-                  <form:select label="状态：" name="status" map="${statusMap}" value="${seed.status}"/>
+                  <form:select label="匹配方式：" name="matchtype" map="${matchTypeMap}" value="${rule.matchtype}"/>
+                  <form:input label="表达式：" name="pattern" value="${rule.pattern}"/>
                   <div class="form-group">
                       <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                       <div class="col-xs-12 col-sm-9">
@@ -89,16 +87,10 @@
             focusInvalid: false,
             ignore: "",
             rules: {
-                name:{
+                matchType:{
                     required:true
                 },
-                url:{
-                    required:true
-                },
-                cron:{
-                    required:true
-                },
-                numberOfCrawler:{
+                pattern:{
                     required:true
                 }
             },

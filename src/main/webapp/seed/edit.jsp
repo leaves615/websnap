@@ -56,11 +56,20 @@
                   <form:input label="网站名称：" name="name" value="${seed.name}"/>
                   <form:input label="URL：" name="url" extendAttribute="placeholder='http://'" value="${seed.url}"/>
                   <form:input label="计划：" name="cron" value="${seed.cron}"/>
+                  <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
+                    <div class="col-xs-12 col-sm-9">
+                        <span class="bg-info">
+                            计划输入格式：* * * * * *
+                        </span>
+                    </div>
+                  </div>
                   <form:input label="并发数：" name="numberOfCrawler" inputType="number" className="col-sm-3" value="${seed.numberOfCrawler}"/>
+                  <form:input label="字符编码" name="charset" value="${seed.charset}"/>
                   <%
                       Map<String, String> statusMap = new HashMap<String, String>();
-                      statusMap.put("0", "禁用");
-                      statusMap.put("1", "启用");
+                      statusMap.put("false", "禁用");
+                      statusMap.put("true", "启用");
                       request.setAttribute("statusMap", statusMap);
                   %>
                   <form:select label="状态：" name="status" map="${statusMap}" value="${seed.status}"/>

@@ -89,7 +89,7 @@
                                 <td>url</td>
                                 <td>上次执行时间</td>
                                 <td>状态</td>
-                                <td>操作</td>
+                                <td width="200">操作</td>
                             </tr>
                             </thead>
                          <tbody>
@@ -111,6 +111,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <a href="/seed/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
+                                            <a href="/seed/${item.id}/pageRule/list" class="btn btn-white btn-mini">页面规则</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

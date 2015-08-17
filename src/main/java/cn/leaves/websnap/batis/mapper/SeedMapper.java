@@ -52,20 +52,9 @@ public interface SeedMapper {
      * @mbggenerated
      */
     @Select({
-        "select",
-        "id, url, lastExecuteTime, cron, status",
+        "select *",
         "from seed",
         "where id = #{id,jdbcType=BIGINT}"
-    })
-    @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
-        @Result(column="lastExecuteTime", property="lastexecutetime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="cron", property="cron", jdbcType=JdbcType.VARCHAR),
-        @Result(column="status", property="status", jdbcType=JdbcType.BIT),
-        @Result(column = "numberOfCrawler", property = "numberOfCrawler", jdbcType = JdbcType.VARCHAR),
-        @Result(column = "charset", property = "charset", jdbcType = JdbcType.VARCHAR)
     })
     Seed selectByPrimaryKey(Long id);
 
@@ -91,7 +80,7 @@ public interface SeedMapper {
           "cron = #{cron,jdbcType=BIGINT},",
           "status = #{status,jdbcType=BIT}",
           "numberOfCrawler = #{numberOfCrawler,jdbcType=BIT}",
-          "charset = #{charset,jdbcType=BIT}",
+          "charset = #{charset,jdbcType=VARCHAR}",
           "name = #{name}",
         "where id = #{id,jdbcType=BIGINT}"
     })
