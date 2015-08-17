@@ -41,11 +41,11 @@
                     </li>
                     <li>爬虫管理</li>
                     <li class="active">网站管理</li>
-                    <li class="active">页面匹配规则列表</li>
+                    <li class="active">页面提取规则列表</li>
                 </ul><!-- /.breadcrumb -->
                 <div class="pull-right">
                     <div class="btn-group">
-                        <a href="${ctx}/seed/${seedid}/pageRule/add" class="btn btn-default btn-sm">添加</a>
+                        <a href="${ctx}/seed/${seedid}/pageRule/${ruleid}/content/add" class="btn btn-default btn-sm">添加</a>
                     </div>
                 </div>
             </div><!-- 主内容顶部导航结束 -->
@@ -58,28 +58,43 @@
                     <thead>
                     <tr>
                         <td width="50">编号</td>
-                        <td width="100">匹配方式</td>
-                        <td>表达式</td>
+                        <td>变量名</td>
+                        <td>获取方式</td>
+                        <td>名称</td>
+                        <td>是否存储</td>
+                        <td>是否判断</td>
+                        <td>判断条件</td>
                         <td width="200">操作</td>
                     </tr>
                     </thead>
                  <tbody>
                     <c:if test="${!empty page.list}">
                         <%
-                            Map<String, String> matchTypeMap = new HashMap<String, String>();
-                            matchTypeMap.put("regex", "正则表达式");
-                            matchTypeMap.put("antStyle", "通配符");
-                            request.setAttribute("matchTypeMap", matchTypeMap);
+                            Map<String, String> collectTypeMap = new HashMap<String, String>();
+                            collectTypeMap.put("regex", "正则表达式");
+                            collectTypeMap.put("html", "html选择器");
+                            request.setAttribute("collectTypeMap", collectTypeMap);
+                            Map<String, String> storageMap = new HashMap<String, String>();
+                            storageMap.put("false", "不存储");
+                            storageMap.put("true", "存储");
+                            request.setAttribute("storageMap", storageMap);
+                            Map<String, String> conditionalMap = new HashMap<String, String>();
+                            conditionalMap.put("false", "无");
+                            conditionalMap.put("true", "条件判断");
+                            request.setAttribute("conditionalMap", conditionalMap);
                         %>
                         <c:forEach items="${page.list}" var="item">
                             <tr>
                                 <td>${item.id}</td>
-                                <td>${matchTypeMap[item.matchtype]}</td>
-                                <td>${item.pattern}</td>
+                                <td>${item.collectvar}</td>
+                                <td>${collectTypeMap[item.collecttype]}</td>
+                                <td>${item.collectlabel}</td>
+                                <td>${storageMap[item.storage.toString()]}</td>
+                                <td>${conditionalMap[item.conditional.toString()]}</td>
+                                <td>${item.conditionpattern}</td>
                                 <td>
-                                    <a href="${ctx}/seed/${seedid}/pageRule/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
-                                    <a href="${ctx}/seed/${seedid}/pageRule/${item.id}/delete" class="btn btn-white btn-mini">删除</a>
-                                    <a href="${ctx}/seed/${seedid}/pageRule/${item.id}/content/list" class="btn btn-white btn-mini">内容提取管理</a>
+                                    <a href="${ctx}/seed/${seedid}/pageRule/${ruleid}/content/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
+                                    <a href="${ctx}/seed/${seedid}/pageRule/${ruleid}/content/${item.id}/delete" class="btn btn-white btn-mini">删除</a>
                                 </td>
                             </tr>
                         </c:forEach>

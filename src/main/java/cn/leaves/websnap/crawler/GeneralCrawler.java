@@ -66,7 +66,7 @@ public class GeneralCrawler extends WebCrawler {
         this.seedId = seedId;
         seed = seedMapper.selectByPrimaryKey(seedId);
         pagerules = seedpageruleMapper.selectBySeedId(seedId);
-        contentprocessruleMap=seedcontentprocessruleMapper.selectBySeedId(seedId).stream().collect(
+        contentprocessruleMap=seedcontentprocessruleMapper.selectByRuleId(seedId).stream().collect(
                 Collectors.groupingBy(Seedcontentprocessrule::getPageid));
     }
 

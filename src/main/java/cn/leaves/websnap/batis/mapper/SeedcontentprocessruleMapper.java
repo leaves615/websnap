@@ -1,6 +1,8 @@
 package cn.leaves.websnap.batis.mapper;
 
 import cn.leaves.websnap.batis.entity.Seedcontentprocessrule;
+import cn.leaves.websnap.batis.entity.Seedpagerule;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
@@ -64,7 +66,7 @@ public interface SeedcontentprocessruleMapper {
     @Select({
         "select",
         "id, pageId, collectVar, collectType, collectLabel, collectPattern, storage, ",
-        "conditional, conditionType, conditionPattern",
+        "conditional, conditionPattern",
         "from seedContentProcessRule",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -113,8 +115,19 @@ public interface SeedcontentprocessruleMapper {
     @Select({
             "select scpr.*",
             "from seedContentProcessRule scpr",
-            "inner join seedPageRule spr on spr.id = scpr.pageId",
-            "where spr.seedId = #{pageId,jdbcType=BIGINT}"
+            "where scpr.pageId = #{pageId,jdbcType=BIGINT}"
     })
-    List<Seedcontentprocessrule> selectBySeedId(Long seedId);
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
+            @Result(column="pageId", property="pageid", jdbcType=JdbcType.BIGINT),
+            @Result(column="collectVar", property="collectvar", jdbcType=JdbcType.VARCHAR),
+            @Result(column="collectType", property="collecttype", jdbcType=JdbcType.VARCHAR),
+            @Result(column="collectLabel", property="collectlabel", jdbcType=JdbcType.VARCHAR),
+            @Result(column="collectPattern", property="collectpattern", jdbcType=JdbcType.VARCHAR),
+            @Result(column="storage", property="storage", jdbcType=JdbcType.BIT),
+            @Result(column="conditional", property="conditional", jdbcType=JdbcType.BIT),
+            @Result(column="conditionPattern", property="conditionpattern", jdbcType=JdbcType.VARCHAR)
+    })
+    Page<Seedcontentprocessrule> selectByRuleId(Long ruleId);
+
 }
