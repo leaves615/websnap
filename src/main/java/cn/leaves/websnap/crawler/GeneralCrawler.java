@@ -105,9 +105,7 @@ public class GeneralCrawler extends WebCrawler {
             Document document = Jsoup.parse(html);
 
             String title = document.select("html head title").text();
-            cn.leaves.websnap.batis.entity.Page dbPage = new cn.leaves.websnap.batis.entity.Page(
-                    seedId, title, page.getWebURL().getURL(), new Date(), false);
-            pageMapper.insert(dbPage);
+
 
             List<Seedcontentprocessrule> rules = getContentRules(getPath(page.getWebURL().getURL()));
             Map<Seedcontentprocessrule, String> collectedMap = new HashMap<>();
@@ -119,7 +117,7 @@ public class GeneralCrawler extends WebCrawler {
                         collectedValue = document.select(rule.getCollectpattern()).html();
                         break;
                     }
-                    case "regex":{
+                    case "regex": {
                         Pattern pattern1 = Pattern.compile(rule.getCollectpattern());
                         Matcher matcher = pattern1.matcher(html);
                         if (matcher.find()) {
@@ -131,7 +129,7 @@ public class GeneralCrawler extends WebCrawler {
                 if (rule.getConditional()) {
                     if (!parseCondition(rule.getConditionpattern(), collectedValue)) {
                         if (logger.isDebugEnabled()) {
-                            logger.debug("Content does not meet the conditions.  Content:"+collectedValue);
+                            logger.debug("Content does not meet the conditions.  Content:" + collectedValue);
                         }
                         needStorge = false;
                     }
@@ -139,6 +137,9 @@ public class GeneralCrawler extends WebCrawler {
                 collectedMap.put(rule, collectedValue);
             }
             if (needStorge) {
+                cn.leaves.websnap.batis.entity.Page dbPage = new cn.leaves.websnap.batis.entity.Page(
+                        seedId, title, page.getWebURL().getURL(), new Date(), true);
+                pageMapper.insert(dbPage);
                 for (Map.Entry<Seedcontentprocessrule, String> entry : collectedMap.entrySet()) {
                     if (entry.getKey().getStorage()) {
                         Pagecollectcontent collectContent = new Pagecollectcontent(
@@ -146,12 +147,10 @@ public class GeneralCrawler extends WebCrawler {
                         pagecollectcontentMapper.insert(collectContent);
                     }
                 }
-                dbPage.setHascontent(true);
-                pageMapper.updateByPrimaryKey(dbPage);
             }
             txManager.commit(status);
-        } catch (UnsupportedEncodingException e) {
-            logger.error("charset error", e);
+        } catch (Exception e) {
+            logger.error("visit e", e);
             txManager.rollback(status);
         }
     }

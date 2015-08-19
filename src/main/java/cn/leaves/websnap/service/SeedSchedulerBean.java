@@ -114,6 +114,7 @@ public class SeedSchedulerBean implements ApplicationContextAware,DisposableBean
     }
 
     @Scheduled(cron = "0/10 * *  * * ? ")
+    @Transactional
     public void checkCrawlerStatus() {
         Iterator<Map.Entry<Long,CrawlController>> iterator = runningSeeds.entrySet().iterator();
         while (iterator.hasNext()) {

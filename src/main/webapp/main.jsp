@@ -8,7 +8,7 @@
 <!doctype html>
 <html lang="zh">
 <head>
-    <title>虚拟账户系统控制台</title>
+    <title>管理平台</title>
     <jsp:include page="/include/commons-include.jsp"/>
 </head>
 <body class="no-skin">

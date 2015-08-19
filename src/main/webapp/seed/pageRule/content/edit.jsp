@@ -61,8 +61,19 @@
                       collectTypeMap.put("html", "html选择器");
                       request.setAttribute("collectTypeMap", collectTypeMap);
                   %>
-                  <form:input label="变量名：" name="collectvar" value="${content.collectvar}"/>
+                  <%--<form:input label="变量名：" name="collectvar" value="${content.collectvar}"/>--%>
                   <form:select label="获取方式：" name="collecttype" map="${collectTypeMap}" value="${content.collecttype}"/>
+                  <form:input label="获取表达式：" name="collectpattern" value="${content.collectpattern}"/>
+                  <div class="form-group">
+                      <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
+                      <div class="col-xs-12 col-sm-9">
+                          <div class="bg-info text-left">
+                              填写对应获取方式的正确表达式：<br>
+                              正则表达式：此域中应为正确的正则表达式。
+                              html选择器：为css 样式选择器
+                          </div>
+                      </div>
+                  </div>
                   <form:input label="名称：" name="collectlabel" value="${content.collectlabel}"/>
                   <%
                       Map<String, String> storageMap = new HashMap<String, String>();
@@ -79,6 +90,14 @@
                   %>
                   <form:select label="是否判断：" name="conditional" map="${conditionalMap}" value="${content.conditional}"/>
                   <form:input label="判断条件" name="conditionpattern" value="${content.conditionpattern}" className="col-sm-12"/>
+                  <div class="col-xs-12 col-sm-9">
+                      <div class="bg-info text-left">
+                          采用SPEL表达式对获取数据进行条件判断，
+                          #this 表示当前值<br>
+                          #contain(value, target)判断value是否包含target值。
+                          逻辑判断符号如： and or 等等
+                      </div>
+                  </div>
                   <div class="form-group">
                       <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                       <div class="col-xs-12 col-sm-9">

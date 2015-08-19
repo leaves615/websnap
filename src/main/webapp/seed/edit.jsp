@@ -9,7 +9,7 @@
 <!doctype html>
 <html lang="zh">
 <head>
-	<title>网站管理</title>
+	<title>管理平台-网站管理</title>
     <jsp:include page="/include/commons-include.jsp"/>
 </head>
 <body class="no-skin">
@@ -59,9 +59,18 @@
                   <div class="form-group">
                     <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                     <div class="col-xs-12 col-sm-9">
-                        <span class="bg-info">
-                            计划输入格式：* * * * * *
-                        </span>
+                        <div class="bg-info text-left">
+                            计划域的格式是字符串，实际由实际上是由七子表达式，描述个别细节的时间表<br>
+这些子表达式是分开的空白，代表：<br>
+1.        Seconds<br>
+2.        Minutes<br>
+3.        Hours<br>
+4.        Day-of-Month<br>
+5.        Month<br>
+6.        Day-of-Week<br>
+7.        Year (可选字段)<br>
+                            <a href="http://www.cnblogs.com/sunjie9606/archive/2012/03/15/2397626.html" target="_blank">详细使用指南</a>
+                        </div>
                     </div>
                   </div>
                   <form:input label="并发数：" name="numberOfCrawler" inputType="number" className="col-sm-3" value="${seed.numberOfCrawler}"/>

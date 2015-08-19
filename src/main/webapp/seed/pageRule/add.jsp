@@ -64,6 +64,16 @@
                   <div class="form-group">
                       <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                       <div class="col-xs-12 col-sm-9">
+                          <div class="bg-info text-left">
+                              填写对应匹配方式的正确表达式：<br>
+                              正则表达式：此域中应为正确的正则表达式。
+                              通配符：为antStype 样式的表达式
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
+                      <div class="col-xs-12 col-sm-9">
                           <div class="btn-group">
                               <button type="submit" class="btn btn-primary btn-small">提交</button>
                               <button type="reset" class="btn btn-light btn-small">重置</button>

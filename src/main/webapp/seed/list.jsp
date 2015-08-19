@@ -6,7 +6,7 @@
 <!doctype html>
 <html lang="zh">
 <head>
-	<title>网站管理</title>
+	<title>管理平台-网站管理</title>
     <jsp:include page="/include/commons-include.jsp"/>
 </head>
 <body class="no-skin">
