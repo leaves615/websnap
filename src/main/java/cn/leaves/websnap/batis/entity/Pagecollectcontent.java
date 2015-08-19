@@ -1,6 +1,9 @@
 package cn.leaves.websnap.batis.entity;
 
 public class Pagecollectcontent {
+    public Pagecollectcontent() {
+    }
+
     public Pagecollectcontent(Long pageid, Long contentruleid, String content) {
         this.pageid = pageid;
         this.contentruleid = contentruleid;

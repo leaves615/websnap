@@ -94,7 +94,7 @@
                                 <td>标题</td>
                                 <td>url</td>
                                 <td>抓取时间</td>
-                                <td width="200">操作</td>
+                                <td width="100">操作</td>
                             </tr>
                             </thead>
                          <tbody>
@@ -106,7 +106,22 @@
                                         <td>${item.weburl}</td>
                                         <td><fmt:formatDate value="${item.fetchtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>
-                                            <a href="/seed/${item.id}/pageRule/list" class="btn btn-white btn-mini">页面规则</a>
+                                            <a href="/pages/${item.id}" class="btn btn-white btn-mini" data-toggle="modal" data-target="#modal">查看</a>
+                                            <div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script type="application/javascript">
+                                                $(document).ready(function () {
+                                                    $("#modal").on("hidden.bs.modal", function () {
+                                                        $(this).removeData('bs.modal');
+                                                        $(this).find(".modal-content").html('');
+                                                    })
+                                                });
+                                            </script>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -125,5 +140,24 @@
 	</div>
 	</div><!--右侧主内容结束 -->
 </div>
+<script type="application/javascript">
+    var getHost = function(url) {
+        var host = "null";
+        if(typeof url == "undefined"
+                || null == url)
+            url = window.location.href;
+        var regex = /(.*\:\/\/[^\/]*)/;
+        var match = url.match(regex);
+        if(typeof match != "undefined"
+                && null != match)
+            host = match[1];
+        return host;
+    }
+    var getDir = function(url){
+        if(url.indexOf("?")>0)
+            url = url.substring(0,url.indexOf("?"))
+        return url.substring(0,url.lastIndexOf("/")+1)
+    }
+</script>
 </body>
 </html>

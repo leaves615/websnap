@@ -55,7 +55,7 @@ public interface PageMapper {
      */
     @Select({
         "select",
-        "id, seedId, weburl, fetchTime, hasContent, content",
+        "id,title, seedId, weburl, fetchTime, hasContent, content",
         "from page",
         "where id = #{id,jdbcType=BIGINT}"
     })

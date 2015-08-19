@@ -1,14 +1,8 @@
 package cn.leaves.websnap.batis.mapper;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
-import static org.apache.ibatis.jdbc.SqlBuilder.SET;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
-import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
-
 import cn.leaves.websnap.batis.entity.Seedcontentprocessrule;
+
+import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class SeedcontentprocessruleSqlProvider {
 
@@ -107,4 +101,5 @@ public class SeedcontentprocessruleSqlProvider {
         
         return SQL();
     }
+
 }

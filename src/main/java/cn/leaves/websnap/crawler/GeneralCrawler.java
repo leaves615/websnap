@@ -84,7 +84,7 @@ public class GeneralCrawler extends WebCrawler {
     public void visit(Page page) {
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-
+        String url = page.getWebURL().getURL();
         TransactionStatus status = txManager.getTransaction(def);
         try {
             if (logger.isDebugEnabled()) {
