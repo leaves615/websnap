@@ -71,7 +71,7 @@ public class SeedSchedulerBean implements ApplicationContextAware,DisposableBean
         }
     }
 
-    private void startCrawler(Seed seed) {
+    public void startCrawler(Seed seed) {
         GeneralCrawler crawler = applicationContext.getBean(GeneralCrawler.class);
         if (logger.isInfoEnabled()) {
             logger.info("start crawler for seed: " + seed);
@@ -148,5 +148,9 @@ public class SeedSchedulerBean implements ApplicationContextAware,DisposableBean
         while(runningSeeds.size()>0) {
             Thread.currentThread().sleep(1000);
         }
+    }
+
+    public List<Long> getRunningSeedIds() {
+        return new ArrayList<>(runningSeeds.keySet());
     }
 }

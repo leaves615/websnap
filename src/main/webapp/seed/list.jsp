@@ -42,7 +42,7 @@
                 </ul><!-- /.breadcrumb -->
                 <div class="pull-right">
                     <div class="btn-group">
-                        <a href="/seed/add" class="btn btn-default btn-sm">添加</a>
+                        <a href="${ctx}/seed/add" class="btn btn-default btn-sm">添加</a>
                     </div>
                 </div>
             </div><!-- 主内容顶部导航结束 -->
@@ -61,12 +61,14 @@
                                 <td>url</td>
                                 <td>上次执行时间</td>
                                 <td>状态</td>
-                                <td width="200">操作</td>
+                                <td>运行状态</td>
+                                <td width="250">操作</td>
                             </tr>
                             </thead>
                          <tbody>
                             <c:if test="${!empty page.list}">
                                 <c:forEach items="${page.list}" var="item">
+                                    <c:set var="running" value="${runnings.contains(item.id)}"/>
                                     <tr>
                                         <td>${item.id}</td>
                                         <td>${item.name}</td>
@@ -75,16 +77,25 @@
                                         <td>${item.status?'启用':'禁用'}</td>
                                         <td>
                                             <c:choose>
+                                                <c:when test="${running}">正在运行</c:when>
+                                                <c:otherwise>计划中</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:if test="${!running}">
+                                            <a href="${ctx}/seed/${item.id}/run" class="btn btn-white btn-mini">执行</a>
+                                            </c:if>
+                                            <c:choose>
                                                 <c:when test="${item.status}">
-                                                    <a href="/seed/${item.id}/disable" class="btn btn-white btn-mini">禁用</a>
+                                                    <a href="${ctx}/seed/${item.id}/disable" class="btn btn-white btn-mini">禁用</a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="/seed/${item.id}/enable" class="btn btn-white btn-mini">启用</a>
+                                                    <a href="${ctx}/seed/${item.id}/enable" class="btn btn-white btn-mini">启用</a>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <a href="/seed/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
-                                            <a href="/seed/${item.id}/delete" class="btn btn-white btn-mini">删除</a>
-                                            <a href="/seed/${item.id}/pageRule/list" class="btn btn-white btn-mini">页面规则</a>
+                                            <a href="${ctx}/seed/${item.id}/update" class="btn btn-white btn-mini">编辑</a>
+                                            <a href="${ctx}/seed/${item.id}/delete" class="btn btn-white btn-mini">删除</a>
+                                            <a href="${ctx}/seed/${item.id}/pageRule/list" class="btn btn-white btn-mini">页面规则</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

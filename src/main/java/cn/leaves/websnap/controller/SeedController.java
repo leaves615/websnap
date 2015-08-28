@@ -3,6 +3,7 @@ package cn.leaves.websnap.controller;
 import cn.leaves.websnap.batis.entity.Seed;
 import cn.leaves.websnap.batis.mapper.SeedMapper;
 import cn.leaves.websnap.pager.PagerContext;
+import cn.leaves.websnap.service.SeedSchedulerBean;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by leaves chen<leaves615@gmail.com> on 15/8/15.
@@ -26,11 +28,14 @@ import javax.annotation.Resource;
 public class SeedController {
     @Resource
     private SeedMapper seedMapper;
+    @Resource
+    private SeedSchedulerBean seedSchedulerBean;
 
     @RequestMapping("/list")
     public String list(Seed seed, ModelMap map) {
         PageHelper.startPage(PagerContext.getPageNo(), PagerContext.getPageSize());
         map.put("page", new PageInfo(seedMapper.findBySelective(seed)));
+        map.put("runnings", seedSchedulerBean.getRunningSeedIds());
         return "seed/list";
     }
 
@@ -85,5 +90,12 @@ public class SeedController {
     public String delete(@PathVariable Long id) {
         seedMapper.deleteByPrimaryKey(id);
         return "redirect:/seed/list";
+    }
+
+    @RequestMapping("/{id}/run")
+    public String manualRun(@PathVariable Long id, HttpServletRequest request) {
+        Seed seed = seedMapper.selectByPrimaryKey(id);
+        seedSchedulerBean.startCrawler(seed);
+        return "redirect:" + request.getHeader("referer");
     }
 }

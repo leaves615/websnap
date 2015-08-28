@@ -42,7 +42,7 @@
                 </ul><!-- /.breadcrumb -->
                 <div class="pull-right">
                     <div class="btn-group">
-                        <a href="/seed/add" class="btn btn-default btn-sm">添加</a>
+                        <a href="${ctx}/seed/add" class="btn btn-default btn-sm">添加</a>
                     </div>
                 </div>
             </div><!-- 主内容顶部导航结束 -->
@@ -106,7 +106,7 @@
                                         <td>${item.weburl}</td>
                                         <td><fmt:formatDate value="${item.fetchtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>
-                                            <a href="/pages/${item.id}" class="btn btn-white btn-mini" data-toggle="modal" data-target="#modal">查看</a>
+                                            <a href="${ctx}/pages/${item.id}" class="btn btn-white btn-mini" data-toggle="modal" data-target="#modal">查看</a>
                                             <div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
