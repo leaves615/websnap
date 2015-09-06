@@ -50,7 +50,7 @@
  <div class="page-content">
       <div class="row">
           <div class="col-xs-12">
-              <form class="form-horizontal" action="/seed/${seedid}/pageRule/${rule.id}/update" method="post" id="form">
+              <form class="form-horizontal" action="${ctx}/seed/${seedid}/pageRule/${rule.id}/update" method="post" id="form">
                   <h3 class="lighter block green">修改页面匹配条件</h3>
                   <input type="hidden" name="seedid" value="${seedid}"/>
                   <input type="hidden" name="id" value="${rule.id}"/>

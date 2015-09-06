@@ -58,7 +58,7 @@
                     <thead>
                     <tr>
                         <td width="50">编号</td>
-                        <td>变量名</td>
+                        <%--<td>变量名</td>--%>
                         <td>获取方式</td>
                         <td>名称</td>
                         <td>是否存储</td>
@@ -86,7 +86,7 @@
                         <c:forEach items="${page.list}" var="item">
                             <tr>
                                 <td>${item.id}</td>
-                                <td>${item.collectvar}</td>
+                                <%--<td>${item.collectvar}</td>--%>
                                 <td>${collectTypeMap[item.collecttype]}</td>
                                 <td>${item.collectlabel}</td>
                                 <td>${storageMap[item.storage.toString()]}</td>
