@@ -139,6 +139,12 @@
                 },
                 pattern:{
                     required:true
+                },
+                conditional:{
+                    required:true
+                },
+                storage:{
+                    required:true
                 }
             },
 
