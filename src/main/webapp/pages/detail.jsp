@@ -59,6 +59,9 @@
             }
         }
         if(_this.attr("href")) {
+            if(!_this.attr("target")){
+                _this.attr("target", "_blank");
+            }
             if(_this.attr("href").charAt(0)=="/"){
                 _this.attr("href", domain + _this.attr("href"));
                 return;

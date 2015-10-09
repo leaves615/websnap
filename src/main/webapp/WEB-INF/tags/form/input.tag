@@ -17,7 +17,7 @@
     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="${name}">${label}</label>
     <div class="col-xs-12 col-sm-9">
         <div class="clearfix">
-            <input id="${name}" type="${inputType==null?'text':inputType}" name="${name}" value="${value}" class="col-xs-12 col-sm-5 ${className}" ${extendAttribute}>
+            <input id="${name}" type="${inputType==null?'text':inputType}" name="${name}" value="${value}" class=" ${className==null?'col-xs-12 col-sm-5':className}" ${extendAttribute}>
         </div>
     </div>
 </div>

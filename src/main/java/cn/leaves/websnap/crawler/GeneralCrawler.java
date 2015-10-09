@@ -6,6 +6,7 @@ import cn.leaves.websnap.batis.entity.Seedcontentprocessrule;
 import cn.leaves.websnap.batis.entity.Seedpagerule;
 import cn.leaves.websnap.batis.mapper.*;
 import cn.leaves.websnap.util.UrlMatchUtil;
+import cn.leaves.websnap.util.UrlParser;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.url.WebURL;
@@ -42,6 +43,8 @@ import java.util.stream.Collectors;
 public class GeneralCrawler extends WebCrawler {
     private static Log logger = LogFactory.getLog(GeneralCrawler.class);
 
+    private static Pattern IMG_SRC_PATTERN_STR = Pattern.compile("(\\<img[^>]*\\ssrc=[\"|'])([^\\s>]+)([\"|'][^>]*>)");
+
     @Resource
     private SeedMapper                   seedMapper;
     @Resource
@@ -53,20 +56,20 @@ public class GeneralCrawler extends WebCrawler {
     @Resource
     private PagecollectcontentMapper     pagecollectcontentMapper;
     @Resource
-    private PlatformTransactionManager txManager;
+    private PlatformTransactionManager   txManager;
 
     private Long seedId;
 
-    private Seed                         seed;
-    private List<Seedpagerule>           pagerules;
-    private Map<Long,List<Seedcontentprocessrule>> contentprocessruleMap;
+    private Seed                                    seed;
+    private List<Seedpagerule>                      pagerules;
+    private Map<Long, List<Seedcontentprocessrule>> contentprocessruleMap;
 
 
     public void init(Long seedId) {
         this.seedId = seedId;
         seed = seedMapper.selectByPrimaryKey(seedId);
         pagerules = seedpageruleMapper.selectBySeedIdWithList(seedId);
-        contentprocessruleMap=seedcontentprocessruleMapper.selectByRuleIdWithList(seedId).stream().collect(
+        contentprocessruleMap = seedcontentprocessruleMapper.selectByRuleIdWithList(seedId).stream().collect(
                 Collectors.groupingBy(Seedcontentprocessrule::getPageid));
     }
 
@@ -198,6 +201,38 @@ public class GeneralCrawler extends WebCrawler {
         }
     }
 
+    private String convertImgAbstractPath(String url, String content) {
+        try {
+            StringBuffer sb = new StringBuffer();
+            UrlParser urlParser = new UrlParser(url);
+            Matcher matcher = IMG_SRC_PATTERN_STR.matcher(content);
+            matcher.reset();
+            boolean result = matcher.find();
+            if (!result) {
+                return content;
+            }
+            while (result) {
+                String src = matcher.group(2);
+                if (src.startsWith("http")) {
+                    //do nothing
+                }else if (src.startsWith("/")) {
+                    src = urlParser.getBase() + src;
+                } else {
+                    src = urlParser.getDir() + src;
+                }
+                matcher.appendReplacement(sb, "$1" + src + "$3");
+                result = matcher.find();
+            }
+            matcher.appendTail(sb);
+            return sb.toString();
+        } catch (MalformedURLException e) {
+            if (logger.isDebugEnabled()) {
+                logger.error(e);
+            }
+            return content;
+        }
+    }
+
     public static boolean contain(String source, String target) {
         if (source == null) {
             source = "";
@@ -212,4 +247,6 @@ public class GeneralCrawler extends WebCrawler {
         String value = "this is test";
         System.out.println(crawler.parseCondition(exp, value));
     }
+
+
 }

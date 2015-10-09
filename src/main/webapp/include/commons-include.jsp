@@ -92,6 +92,8 @@ window.jQuery || document.write("<script src='${ctx}/assets/js/jquery1x.min.js'>
 <script src="${ctx}/assets/js/bootstrap-datepicker.min.js"></script>
 <script src="${ctx}/assets/js/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${ctx}/assets/js/bootstrap-timepicker.min.js"></script>
+<script src="${ctx}/assets/js/jquery.autosize.min.js"></script>
+
 <!-- ace scripts -->
 <script src="${ctx}/assets/js/ace-elements.min.js"></script>
 <script src="${ctx}/assets/js/ace.min.js"></script>

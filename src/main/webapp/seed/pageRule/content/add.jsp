@@ -60,7 +60,7 @@
                       collectTypeMap.put("html", "html选择器");
                       request.setAttribute("collectTypeMap", collectTypeMap);
                   %>
-                  <%--<form:input label="变量名：" name="collectvar" value="${content.collectvar}"/>--%>
+                  <form:input label="变量名：" name="collectvar" value="${content.collectvar}"/>
                   <form:select label="获取方式：" name="collecttype" map="${collectTypeMap}" value="${content.collecttype}"/>
                   <form:input label="获取表达式：" name="collectpattern" value="${content.collectpattern}"/>
                   <div class="form-group">
@@ -88,7 +88,14 @@
                       request.setAttribute("conditionalMap", conditionalMap);
                   %>
                   <form:select label="是否判断：" name="conditional" map="${conditionalMap}" value="${content.conditional}"/>
-                  <form:input label="判断条件" name="conditionpattern" value="${content.conditionpattern}" className="col-sm-12"/>
+                  <div class="form-group">
+                      <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="conditionpattern">判断条件</label>
+                      <div class="col-xs-12 col-sm-9">
+                          <div class="clearfix">
+                              <textarea id="conditionpattern" name="conditionpattern" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 172px;">${content.conditionpattern}</textarea>
+                          </div>
+                      </div>
+                  </div>
                   <div class="form-group">
                       <label class="control-label col-xs-12 col-sm-3 no-padding-right"></label>
                       <div class="col-xs-12 col-sm-9">
@@ -119,6 +126,8 @@
 </div>
 <script type="application/javascript">
     $(document).ready(function(){
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+
         $('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
