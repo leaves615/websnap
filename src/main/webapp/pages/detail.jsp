@@ -49,27 +49,16 @@
     $("#modal").find("a,img").each(function () {
         var _this = $(this);
         if(_this.attr("src")) {
-            if(_this.attr("src").indexOf("http")>0) return;
-            if(_this.attr("src").charAt(0)=="/"){
-                _this.attr("src", domain + _this.attr("src"));
-                return;
-            }else{
-                _this.attr("src", path + _this.attr("src"));
-                return;
-            }
+            if(_this.attr("src").indexOf("http")!=0) _this.attr("src",absolutizeURI($("#pageUrl").text(),_this.attr("src")));
         }
         if(_this.attr("href")) {
             if(!_this.attr("target")){
                 _this.attr("target", "_blank");
             }
-            if(_this.attr("href").charAt(0)=="/"){
-                _this.attr("href", domain + _this.attr("href"));
-                return;
-            }else{
-                _this.attr("href", path + _this.attr("href"));
-                return;
-            }
+            if(_this.attr("href").indexOf("http")!=0) _this.attr("href",absolutizeURI($("#pageUrl").text(),_this.attr("href")));
         }
 
     });
+
+
 </script>
