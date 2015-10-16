@@ -580,25 +580,25 @@
                                             表达式字段:
                                         </td>
                                         <td>
-                                            <input type="text" name="v_second" class="input-mini" value="*" readonly="readonly">
+                                            <input type="text" name="v_second" class="input-mini" value="*" >
                                         </td>
                                         <td>
-                                            <input type="text" name="v_min" class="input-mini" value="*" readonly="readonly">
+                                            <input type="text" name="v_min" class="input-mini" value="*" >
                                         </td>
                                         <td>
-                                            <input type="text" name="v_hour" class="input-mini" value="*" readonly="readonly">
+                                            <input type="text" name="v_hour" class="input-mini" value="*" >
                                         </td>
                                         <td>
-                                            <input type="text" name="v_day" class="input-mini" value="*" readonly="readonly">
+                                            <input type="text" name="v_day" class="input-mini" value="*" >
                                         </td>
                                         <td>
-                                            <input type="text" name="v_mouth" class="input-mini" value="*" readonly="readonly">
+                                            <input type="text" name="v_mouth" class="input-mini" value="*" >
                                         </td>
                                         <td>
-                                            <input type="text" name="v_week" class="input-mini" value="?" readonly="readonly">
+                                            <input type="text" name="v_week" class="input-mini" value="?" >
                                         </td>
                                         <td>
-                                            <input type="text" name="v_year" class="input-mini" readonly="readonly">
+                                            <input type="text" name="v_year" class="input-mini" >
                                         </td>
                                     </tr>
                                     </tbody>

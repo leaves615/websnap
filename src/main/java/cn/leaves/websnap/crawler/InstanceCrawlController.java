@@ -2,7 +2,6 @@ package cn.leaves.websnap.crawler;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
-import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import org.slf4j.Logger;
@@ -23,23 +22,23 @@ public class InstanceCrawlController extends CrawlController {
         super(config, pageFetcher, robotstxtServer);
     }
 
-    public void start(WebCrawler webCrawler, int numberOfCrawlers) {
+    public void start(WebCrawlerEx webCrawler, int numberOfCrawlers) {
         start(webCrawler, numberOfCrawlers, false);
     }
 
-    public void startNonBlocking(WebCrawler webCrawler, int numberOfCrawlers) {
+    public void startNonBlocking(WebCrawlerEx webCrawler, int numberOfCrawlers) {
         start(webCrawler, numberOfCrawlers, false);
     }
 
-    protected void start(WebCrawler webCrawler, int numberOfCrawlers, boolean isBlocking) {
+    protected void start(WebCrawlerEx webCrawler, int numberOfCrawlers, boolean isBlocking) {
         try {
             finished = false;
             crawlersLocalData.clear();
             final List<Thread> threads = new ArrayList<>();
-            final List<WebCrawler> crawlers = new ArrayList<>();
+            final List<WebCrawlerEx> crawlers = new ArrayList<>();
 
             for (int i = 1; i <= numberOfCrawlers; i++) {
-                WebCrawler crawler = webCrawler;
+                WebCrawlerEx crawler = webCrawler;
                 Thread thread = new Thread(crawler, "Crawler " + i);
                 crawler.setThread(thread);
                 crawler.init(i, this);
@@ -66,7 +65,7 @@ public class InstanceCrawlController extends CrawlController {
                                     if (!thread.isAlive()) {
                                         if (!shuttingDown) {
                                             logger.info("Thread {} was dead, I'll recreate it", i);
-                                            WebCrawler crawler = webCrawler;
+                                            WebCrawlerEx crawler = webCrawler;
                                             thread = new Thread(crawler, "Crawler " + (i + 1));
                                             threads.remove(i);
                                             threads.add(i, thread);
@@ -109,7 +108,7 @@ public class InstanceCrawlController extends CrawlController {
                                         logger.info("All of the crawlers are stopped. Finishing the process...");
                                         // At this step, frontier notifies the threads that were waiting for new URLs and they should stop
                                         frontier.finish();
-                                        for (WebCrawler crawler : crawlers) {
+                                        for (WebCrawlerEx crawler : crawlers) {
                                             crawler.onBeforeExit();
                                             crawlersLocalData.add(crawler.getMyLocalData());
                                         }

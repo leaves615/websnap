@@ -12,7 +12,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">抓取内容</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body" style="overflow: scroll; height: 800px;">
     <div class="form-horizontal">
         <div class="form-group">
             <label class="control-label col-xs-12 col-sm-2 no-padding-right">网页标题:</label>

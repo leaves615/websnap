@@ -9,6 +9,8 @@ import cn.leaves.websnap.util.UrlMatchUtil;
 import cn.leaves.websnap.util.UrlParser;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
+import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import edu.uci.ics.crawler4j.parser.ParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,7 +42,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @Component
 @Scope(value = "prototype")
-public class GeneralCrawler extends WebCrawler {
+public class GeneralCrawler extends WebCrawlerEx {
     private static Log logger = LogFactory.getLog(GeneralCrawler.class);
 
     private static Pattern IMG_SRC_PATTERN_STR = Pattern.compile("(\\<img[^>]*\\ssrc=[\"|'])([^\\s>]+)([\"|'][^>]*>)");
@@ -106,8 +108,13 @@ public class GeneralCrawler extends WebCrawler {
             }
             String html = new String(page.getContentData(), charset);
             Document document = Jsoup.parse(html);
-
-            String title = document.select("html head title").text();
+            ParseData parseData = page.getParseData();
+            String title = null;
+            if (parseData instanceof HtmlParseData) {
+                title = ((HtmlParseData) parseData).getTitle();
+            }else {
+                title = document.select("html head title").text();
+            }
 
 
             List<Seedcontentprocessrule> rules = getContentRules(getPath(page.getWebURL().getURL()));
@@ -149,6 +156,11 @@ public class GeneralCrawler extends WebCrawler {
                                 dbPage.getId(), entry.getKey().getId(), entry.getValue());
                         pagecollectcontentMapper.insert(collectContent);
                     }
+                    if (entry.getKey().getCollectvar().equals("title")) {
+                        dbPage.setTitle(entry.getValue());
+                        pageMapper.updateByPrimaryKey(dbPage);
+                    }
+
                 }
             }
             txManager.commit(status);
